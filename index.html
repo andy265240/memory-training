@@ -3,7 +3,7 @@
 .input-history{margin-top:10px;height:42px;display:flex;align-items:center;overflow:hidden;border:1px solid #e3e3e6;border-radius:12px;background:#f7f7f8;padding:0 8px;direction:ltr}.input-history-inner{display:flex;align-items:center;gap:6px;min-width:max-content;white-space:nowrap;transform:translateX(0);transition:transform .18s ease}.history-label{flex:0 0 auto;font-size:12px;color:#777;margin-right:2px}.history-chip{flex:0 0 auto;background:#fff;border-radius:9px;padding:6px 9px;font-size:13px;font-weight:700;box-shadow:0 1px 3px #0000000b}.history-empty{font-size:12px;color:#aaa}
 </style></head><body><div class="wrap"><div class="title">安的赌场概率计算器</div><div class="sub">标准百家乐 · 8副牌 · 概率 / EV / 凯利</div><div class="card"><div class="row"><h2>牌靴</h2><button class="primary small" onclick="resetShoe()">新牌靴</button></div><div class="stats"><div class="stat"><div class="num" id="remain">416</div><div class="lab">剩余张数</div></div><div class="stat"><div class="num" id="decks">8.00</div><div class="lab">剩余副数</div></div><div class="stat"><div class="num" id="dealt">0</div><div class="lab">已录入</div></div></div></div><div class="card"><h2>录入已经出现的牌</h2><div class="grid"><button onclick="add(0)">0</button><button onclick="add(1)">A / 1</button><button onclick="add(2)">2</button><button onclick="add(3)">3</button><button onclick="add(4)">4</button><button onclick="add(5)">5</button><button onclick="add(6)">6</button><button onclick="add(7)">7</button><button onclick="add(8)">8</button><button onclick="add(9)">9</button></div><div class="row" style="margin-top:10px"><button class="danger small" onclick="undo()">撤销上一张</button><span id="msg" class="muted">点击牌面录入已出现的牌</span></div>
 <div class="input-history" id="history"><div class="input-history-inner" id="historyInner"><span class="history-label">已输入牌</span><span class="history-empty">暂无</span></div></div>
-</div><div class="card"><h2>当前剩余牌</h2><div class="pills" id="counts"></div></div><div class="card"><h2>理论概率（下一局）</h2><div class="stats"><div class="stat"><div class="num" id="bp">--</div><div class="lab">庄胜</div></div><div class="stat"><div class="num" id="pp">--</div><div class="lab">闲胜</div></div><div class="stat"><div class="num" id="tp">--</div><div class="lab">和局</div></div></div><p class="note">按当前剩余牌组成，并按标准百家乐第三张补牌规则进行枚举。</p></div><div class="card"><h2>EV</h2><div class="ev"><div class="box"><b>庄注</b><div class="num" id="bev">--</div><div class="lab">庄赢扣5%佣金；和局退回</div></div><div class="box"><b>闲注</b><div class="num" id="pev">--</div><div class="lab">1:1；和局退回</div></div></div><div id="signal" class="num muted" style="margin-top:12px">等待数据</div></div><div class="card"><h2>凯利 / 半凯利</h2><div class="row"><span>本金（元）</span><input id="bankroll" type="number" value="10000" min="0" oninput="render()"></div><div class="ev" style="margin-top:8px"><div class="box"><b>庄 全凯利</b><div class="num" id="bk">--</div></div><div class="box"><b>闲 全凯利</b><div class="num" id="pk">--</div></div><div class="box"><b>庄 半凯利</b><div class="num" id="bhk">--</div></div><div class="box"><b>闲 半凯利</b><div class="num" id="phk">--</div></div></div><p class="note">凯利仅为数学参考；微小优势对概率估计误差很敏感。</p></div></div><script>
+</div><div class="card"><h2>当前剩余牌</h2><div class="pills" id="counts"></div></div><div class="card"><h2>理论概率（下一局）</h2><div class="stats"><div class="stat"><div class="num" id="bp">--</div><div class="lab">庄胜</div></div><div class="stat"><div class="num" id="pp">--</div><div class="lab">闲胜</div></div><div class="stat"><div class="num" id="tp">--</div><div class="lab">和局</div></div></div><p class="note">按当前剩余牌组成，并按标准百家乐第三张补牌规则进行枚举。</p></div><div class="card"><h2>EV</h2><div class="ev"><div class="box"><b>庄注</b><div class="num" id="bev">--</div><div class="lab">庄赢扣5%佣金；和局退回</div></div><div class="box"><b>闲注</b><div class="num" id="pev">--</div><div class="lab">1:1；和局退回</div></div></div><div id="signal" class="num muted" style="margin-top:12px">等待数据</div></div><div class="card"><h2>正EV筛选模式</h2><div class="ev"><div class="box"><b>筛选结果</b><div class="num" id="filterSignal">等待数据</div></div><div class="box"><b>正EV下注方</b><div class="num" id="filterSide">--</div></div><div class="box"><b>当前最高EV</b><div class="num" id="filterMaxEv">--</div></div><div class="box"><b>距盈亏平衡</b><div class="num" id="filterGap">--</div></div><div class="box"><b>下注状态</b><div class="num" id="filterAction">--</div></div></div><p class="note">只筛选实际计算出的正EV；EV≤0不进入凯利下注计算。距盈亏平衡显示最高EV与0之间的差距；正数即代表已经越过盈亏平衡线。</p></div><div class="card"><h2>凯利 / 半凯利</h2><div class="row"><span>本金（元）</span><input id="bankroll" type="number" value="10000" min="0" oninput="render()"></div><div class="ev" style="margin-top:8px"><div class="box"><b>庄 全凯利</b><div class="num" id="bk">--</div></div><div class="box"><b>闲 全凯利</b><div class="num" id="pk">--</div></div><div class="box"><b>庄 半凯利</b><div class="num" id="bhk">--</div></div><div class="box"><b>闲 半凯利</b><div class="num" id="phk">--</div></div></div><p class="note">凯利仅为数学参考；微小优势对概率估计误差很敏感。</p></div></div><script>
 const initial=Array(10).fill(32);initial[0]=128;let shoe=[...initial],stack=[];
 const v=x=>x===0?0:x;
 const rankName=x=>x===0?'0':x===1?'A':String(x);
@@ -77,9 +77,28 @@ function render(){
  bev.textContent=pct(eb);pev.textContent=pct(ep);
  bev.className='num '+(eb>0?'green':'red');pev.className='num '+(ep>0?'green':'red');
  signal.textContent=eb>0?'庄注理论EV为正（+）':ep>0?'闲注理论EV为正（+）':'当前没有理论正EV下注';signal.className='num '+(eb>0||ep>0?'green':'muted');
+ // 正EV筛选：只允许实际EV>0的一方进入凯利计算；不改变概率或EV本身。
+ const fs=document.getElementById('filterSignal'), side=document.getElementById('filterSide');
+ const maxEv=Math.max(eb,ep);
+ const maxSide=eb>=ep?'庄':'闲';
+ const maxEl=document.getElementById('filterMaxEv'), gapEl=document.getElementById('filterGap'), actionEl=document.getElementById('filterAction');
+ maxEl.textContent=(maxEv*100).toFixed(4)+'%';
+ maxEl.className='num '+(maxEv>0?'green':'red');
+ // “距盈亏平衡”：负数表示还差多少；正数表示已经超过盈亏平衡线。
+ gapEl.textContent=(maxEv*100).toFixed(4)+'%';
+ gapEl.className='num '+(maxEv>0?'green':'red');
+ if(eb>0 || ep>0){
+   fs.textContent='发现正EV机会'; fs.className='num green';
+   side.textContent=eb>0 && ep>0 ? '庄 + 闲' : (eb>0 ? '庄' : '闲');
+   side.className='num green';
+   actionEl.textContent='可下注 · '+maxSide; actionEl.className='num green';
+ }else{
+   fs.textContent='等待正EV'; fs.className='num muted';
+   side.textContent='无'; side.className='num muted';
+   actionEl.textContent='等待 · '+maxSide; actionEl.className='num muted';
+ }
  let br=Number(bankroll.value)||0;
  // Kelly按“条件于非和局”的胜负概率计算，分别对应庄5%佣金和闲1:1。
- const qB=o.B/(1-o.T), qP=o.P/(1-o.T);
  const kb=eb>0 ? Math.max(0,eb/(.95*(o.B+o.P))) : 0;
  const kp=ep>0 ? Math.max(0,ep/(o.B+o.P)) : 0;
  [['bk',kb],['pk',kp],['bhk',kb/2],['phk',kp/2]].forEach(([id,z])=>document.getElementById(id).textContent=(z*100).toFixed(3)+'% / ¥'+(z*br).toFixed(2));
