@@ -1,5 +1,85 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>安的赌场概率计算器</title><style>*{box-sizing:border-box}body{margin:0;background:#f4f4f6;color:#171717;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:700px;margin:auto;padding:18px 14px 40px}.title{text-align:center;font-size:26px;font-weight:800}.sub{text-align:center;color:#777;font-size:13px;margin:5px 0 16px}.card{background:#fff;border-radius:18px;padding:16px;margin:10px 0;box-shadow:0 2px 12px #0000000b}h2{font-size:17px;margin:0 0 12px}.row{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}button{border:0;border-radius:12px;padding:13px 5px;font-size:16px;font-weight:700;background:#eee}button:active{transform:scale(.97)}.primary{background:#171717;color:white}.danger{background:#ffe5e5}.small{font-size:13px;padding:10px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat,.box{background:#f7f7f8;border-radius:13px;padding:11px;text-align:center}.num{font-size:20px;font-weight:800}.lab{font-size:11px;color:#777;margin-top:3px}.ev{display:grid;grid-template-columns:1fr 1fr;gap:8px}.box{text-align:left}.green{color:#087b3e}.red{color:#b42318}.muted{color:#777}.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{background:#f1f1f3;border-radius:99px;padding:6px 9px;font-size:12px}.note{font-size:12px;line-height:1.55;color:#666}input{width:120px;padding:9px;border:1px solid #ddd;border-radius:10px;font-size:16px}</style></head><body><div class="wrap"><div class="title">安的赌场概率计算器</div><div class="sub">标准百家乐 · 8副牌 · 概率 / EV / 凯利</div><div class="card"><div class="row"><h2>牌靴</h2><button class="primary small" onclick="resetShoe()">新牌靴</button></div><div class="stats"><div class="stat"><div class="num" id="remain">416</div><div class="lab">剩余张数</div></div><div class="stat"><div class="num" id="decks">8.00</div><div class="lab">剩余副数</div></div><div class="stat"><div class="num" id="dealt">0</div><div class="lab">已录入</div></div></div></div><div class="card"><h2>录入已经出现的牌</h2><div class="grid"><button onclick="add(0)">0</button><button onclick="add(1)">A / 1</button><button onclick="add(2)">2</button><button onclick="add(3)">3</button><button onclick="add(4)">4</button><button onclick="add(5)">5</button><button onclick="add(6)">6</button><button onclick="add(7)">7</button><button onclick="add(8)">8</button><button onclick="add(9)">9</button></div><div class="row" style="margin-top:10px"><button class="danger small" onclick="undo()">撤销上一张</button><span id="msg" class="muted">点击牌面录入已出现的牌</span></div></div><div class="card"><h2>当前剩余牌</h2><div class="pills" id="counts"></div></div><div class="card"><h2>理论概率（下一局）</h2><div class="stats"><div class="stat"><div class="num" id="bp">--</div><div class="lab">庄胜</div></div><div class="stat"><div class="num" id="pp">--</div><div class="lab">闲胜</div></div><div class="stat"><div class="num" id="tp">--</div><div class="lab">和局</div></div></div><p class="note">按当前剩余牌组成，并按标准百家乐第三张补牌规则进行枚举。</p></div><div class="card"><h2>EV</h2><div class="ev"><div class="box"><b>庄注</b><div class="num" id="bev">--</div><div class="lab">庄赢扣5%佣金；和局退回</div></div><div class="box"><b>闲注</b><div class="num" id="pev">--</div><div class="lab">1:1；和局退回</div></div></div><div id="signal" class="num muted" style="margin-top:12px">等待数据</div></div><div class="card"><h2>凯利 / 半凯利</h2><div class="row"><span>本金（元）</span><input id="bankroll" type="number" value="10000" min="0" oninput="render()"></div><div class="ev" style="margin-top:8px"><div class="box"><b>庄 全凯利</b><div class="num" id="bk">--</div></div><div class="box"><b>闲 全凯利</b><div class="num" id="pk">--</div></div><div class="box"><b>庄 半凯利</b><div class="num" id="bhk">--</div></div><div class="box"><b>闲 半凯利</b><div class="num" id="phk">--</div></div></div><p class="note">凯利仅为数学参考；微小优势对概率估计误差很敏感。</p></div></div><script>
-const initial=Array(10).fill(32);initial[0]=128;let shoe=[...initial],stack=[];const v=x=>x===0?0:x;
-function add(x){if(shoe[x]<=0){msg.textContent='该牌已没有剩余';return}shoe[x]--;stack.push(x);msg.textContent='已录入 '+(x===1?'A':x);render()}function undo(){if(!stack.length)return;let x=stack.pop();shoe[x]++;msg.textContent='已撤销 '+(x===1?'A':x);render()}function resetShoe(){shoe=[...initial];stack=[];msg.textContent='已重新开始8副牌';render()}
-function exact(sh){let B=0,P=0,T=0;function draw4(st,seq,prob){if(seq.length<4){let total=st.reduce((a,b)=>a+b,0);for(let x=0;x<10;x++)if(st[x]){let ns=[...st],pr=prob*st[x]/total;ns[x]--;draw4(ns,seq.concat(x),pr)}return}let pa=(v(seq[0])+v(seq[1]))%10,pb=(v(seq[2])+v(seq[3]))%10;if(pa<=5){let total=st.reduce((a,b)=>a+b,0);for(let e=0;e<10;e++)if(st[e]){let ns=[...st],pr=prob*st[e]/total;ns[e]--;banker(ns,pa,pb,v(e),pr)}}else banker(st,pa,pb,null,prob)}function banker(st,pa,pb,p3,prob){let draw=pb<=2||(pb===3&&p3!==8)||(pb===4&&p3>=2&&p3<=7)||(pb===5&&p3>=4&&p3<=7)||(pb===6&&(p3===6||p3===7));if(draw){let total=st.reduce((a,b)=>a+b,0);for(let f=0;f<10;f++)if(st[f]){let ns=[...st],pr=prob*st[f]/total;ns[f]--;finish(pa,pb,f,pr)}}else finish(pa,pb,null,prob)}function finish(pa,pb,f,prob){let b=pb;if(f!==null)b=(b+v(f))%10;if(pa>b)P+=prob;else if(pa<b)B+=prob;else T+=prob}draw4([...sh],[],1);return{B,P,T}}
-function pct(x){return(x*100).toFixed(3)+'%'}function render(){let r=shoe.reduce((a,b)=>a+b,0);remain.textContent=r;decks.textContent=(r/52).toFixed(2);dealt.textContent=416-r;counts.innerHTML=shoe.map((n,i)=>`<span class="pill">${i===1?'A':i}: ${n}</span>`).join('');if(r<6)return;let o=exact(shoe),eb=.95*o.B-o.P,ep=o.P-o.B;bp.textContent=pct(o.B);pp.textContent=pct(o.P);tp.textContent=pct(o.T);bev.textContent=pct(eb);pev.textContent=pct(ep);bev.className='num '+(eb>0?'green':'red');pev.className='num '+(ep>0?'green':'red');signal.textContent=eb>0?'庄注理论EV为正':ep>0?'闲注理论EV为正':'当前没有理论正EV下注';signal.className='num '+(eb>0||ep>0?'green':'muted');let br=Number(bankroll.value)||0;let kb=eb>0?Math.max(0,(.95*(o.B/(1-o.T))-(1-o.B/(1-o.T)))/.95):0;let kp=ep>0?Math.max(0,(o.P/(1-o.T)-(1-o.P/(1-o.T)))):0;[['bk',kb],['pk',kp],['bhk',kb/2],['phk',kp/2]].forEach(([id,z])=>document.getElementById(id).textContent=(z*100).toFixed(3)+'% / ¥'+(z*br).toFixed(2))}render();</script></body></html>
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>安的赌场概率计算器</title><style>*{box-sizing:border-box}body{margin:0;background:#f4f4f6;color:#171717;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.wrap{max-width:700px;margin:auto;padding:18px 14px 40px}.title{text-align:center;font-size:26px;font-weight:800}.sub{text-align:center;color:#777;font-size:13px;margin:5px 0 16px}.card{background:#fff;border-radius:18px;padding:16px;margin:10px 0;box-shadow:0 2px 12px #0000000b}h2{font-size:17px;margin:0 0 12px}.row{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}button{border:0;border-radius:12px;padding:13px 5px;font-size:16px;font-weight:700;background:#eee}button:active{transform:scale(.97)}.primary{background:#171717;color:white}.danger{background:#ffe5e5}.small{font-size:13px;padding:10px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat,.box{background:#f7f7f8;border-radius:13px;padding:11px;text-align:center}.num{font-size:20px;font-weight:800}.lab{font-size:11px;color:#777;margin-top:3px}.ev{display:grid;grid-template-columns:1fr 1fr;gap:8px}.box{text-align:left}.green{color:#087b3e}.red{color:#b42318}.muted{color:#777}.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{background:#f1f1f3;border-radius:99px;padding:6px 9px;font-size:12px}.note{font-size:12px;line-height:1.55;color:#666}input{width:120px;padding:9px;border:1px solid #ddd;border-radius:10px;font-size:16px}
+/* 只新增：已输入牌显示栏；不改变原页面布局 */
+.input-history{margin-top:10px;height:42px;display:flex;align-items:center;overflow:hidden;border:1px solid #e3e3e6;border-radius:12px;background:#f7f7f8;padding:0 8px;direction:ltr}.input-history-inner{display:flex;align-items:center;gap:6px;min-width:max-content;white-space:nowrap;transform:translateX(0);transition:transform .18s ease}.history-label{flex:0 0 auto;font-size:12px;color:#777;margin-right:2px}.history-chip{flex:0 0 auto;background:#fff;border-radius:9px;padding:6px 9px;font-size:13px;font-weight:700;box-shadow:0 1px 3px #0000000b}.history-empty{font-size:12px;color:#aaa}
+</style></head><body><div class="wrap"><div class="title">安的赌场概率计算器</div><div class="sub">标准百家乐 · 8副牌 · 概率 / EV / 凯利</div><div class="card"><div class="row"><h2>牌靴</h2><button class="primary small" onclick="resetShoe()">新牌靴</button></div><div class="stats"><div class="stat"><div class="num" id="remain">416</div><div class="lab">剩余张数</div></div><div class="stat"><div class="num" id="decks">8.00</div><div class="lab">剩余副数</div></div><div class="stat"><div class="num" id="dealt">0</div><div class="lab">已录入</div></div></div></div><div class="card"><h2>录入已经出现的牌</h2><div class="grid"><button onclick="add(0)">0</button><button onclick="add(1)">A / 1</button><button onclick="add(2)">2</button><button onclick="add(3)">3</button><button onclick="add(4)">4</button><button onclick="add(5)">5</button><button onclick="add(6)">6</button><button onclick="add(7)">7</button><button onclick="add(8)">8</button><button onclick="add(9)">9</button></div><div class="row" style="margin-top:10px"><button class="danger small" onclick="undo()">撤销上一张</button><span id="msg" class="muted">点击牌面录入已出现的牌</span></div>
+<div class="input-history" id="history"><div class="input-history-inner" id="historyInner"><span class="history-label">已输入牌</span><span class="history-empty">暂无</span></div></div>
+</div><div class="card"><h2>当前剩余牌</h2><div class="pills" id="counts"></div></div><div class="card"><h2>理论概率（下一局）</h2><div class="stats"><div class="stat"><div class="num" id="bp">--</div><div class="lab">庄胜</div></div><div class="stat"><div class="num" id="pp">--</div><div class="lab">闲胜</div></div><div class="stat"><div class="num" id="tp">--</div><div class="lab">和局</div></div></div><p class="note">按当前剩余牌组成，并按标准百家乐第三张补牌规则进行枚举。</p></div><div class="card"><h2>EV</h2><div class="ev"><div class="box"><b>庄注</b><div class="num" id="bev">--</div><div class="lab">庄赢扣5%佣金；和局退回</div></div><div class="box"><b>闲注</b><div class="num" id="pev">--</div><div class="lab">1:1；和局退回</div></div></div><div id="signal" class="num muted" style="margin-top:12px">等待数据</div></div><div class="card"><h2>凯利 / 半凯利</h2><div class="row"><span>本金（元）</span><input id="bankroll" type="number" value="10000" min="0" oninput="render()"></div><div class="ev" style="margin-top:8px"><div class="box"><b>庄 全凯利</b><div class="num" id="bk">--</div></div><div class="box"><b>闲 全凯利</b><div class="num" id="pk">--</div></div><div class="box"><b>庄 半凯利</b><div class="num" id="bhk">--</div></div><div class="box"><b>闲 半凯利</b><div class="num" id="phk">--</div></div></div><p class="note">凯利仅为数学参考；微小优势对概率估计误差很敏感。</p></div></div><script>
+const initial=Array(10).fill(32);initial[0]=128;let shoe=[...initial],stack=[];
+const v=x=>x===0?0:x;
+const rankName=x=>x===0?'0':x===1?'A':String(x);
+function add(x){if(shoe[x]<=0){msg.textContent='该牌已没有剩余';return}shoe[x]--;stack.push(x);msg.textContent='已录入 '+rankName(x);render()}
+function undo(){if(!stack.length)return;let x=stack.pop();shoe[x]++;msg.textContent='已撤销 '+rankName(x);render()}
+function resetShoe(){shoe=[...initial];stack=[];msg.textContent='已重新开始8副牌';render()}
+
+/* 标准百家乐精确枚举：无放回抽牌，处理自然8/9和完整第三张规则。 */
+function exact(sh){
+ let B=0,P=0,T=0;
+ const totalCards=()=>sh.reduce((a,b)=>a+b,0);
+ function drawInitial(st,seq,prob){
+   if(seq.length<4){
+     const total=totalCards.call({});
+     const n=st.reduce((a,b)=>a+b,0);
+     for(let x=0;x<10;x++)if(st[x]){let ns=[...st],pr=prob*st[x]/n;ns[x]--;drawInitial(ns,seq.concat(x),pr)}
+     return;
+   }
+   const bankerTotal=(v(seq[0])+v(seq[2]))%10;
+   const playerTotal=(v(seq[1])+v(seq[3]))%10;
+   // 自然牌：任一方8/9，立即结算，不能再补牌。
+   if(bankerTotal>=8||playerTotal>=8){finish(bankerTotal,playerTotal,null,prob);return;}
+   // 闲5点及以下补第三张；6/7停牌。
+   if(playerTotal<=5){
+     const n=st.reduce((a,b)=>a+b,0);
+     for(let p3=0;p3<10;p3++)if(st[p3]){
+       let ns=[...st],pr=prob*st[p3]/n;ns[p3]--;
+       bankerStep(ns,bankerTotal,playerTotal,p3,pr);
+     }
+   }else bankerStep(st,bankerTotal,playerTotal,null,prob);
+ }
+ function bankerStep(st,bt,pt,p3,prob){
+   const playerFinal=p3===null?pt:(pt+v(p3))%10;
+   const draw=p3===null ? bt<=5 : (bt<=2||(bt===3&&p3!==8)||(bt===4&&p3>=2&&p3<=7)||(bt===5&&p3>=4&&p3<=7)||(bt===6&&(p3===6||p3===7)));
+   if(!draw){finish(bt,playerFinal,null,prob);return;}
+   const n=st.reduce((a,b)=>a+b,0);
+   for(let b3=0;b3<10;b3++)if(st[b3]){
+     let ns=[...st],pr=prob*st[b3]/n;ns[b3]--;finish(bt,playerFinal,b3,pr);
+   }
+ }
+ function finish(bt,pt,b3,prob){
+   const finalB=b3===null?bt:(bt+v(b3))%10;
+   if(finalB>pt)B+=prob;else if(pt>finalB)P+=prob;else T+=prob;
+ }
+ drawInitial([...sh],[],1);
+ const s=B+P+T;
+ return {B:B/s,P:P/s,T:T/s};
+}
+function pct(x){return(x*100).toFixed(3)+'%'}
+function renderHistory(){
+ const inner=document.getElementById('historyInner');
+ inner.innerHTML='<span class="history-label">已输入牌</span>';
+ if(!stack.length){inner.innerHTML+='<span class="history-empty">暂无</span>';return}
+ stack.forEach(x=>{const s=document.createElement('span');s.className='history-chip';s.textContent=rankName(x);inner.appendChild(s)});
+ requestAnimationFrame(()=>{
+   const box=document.getElementById('history');
+   const overflow=Math.max(0,inner.scrollWidth-box.clientWidth+8);
+   inner.style.transform='translateX(-'+overflow+'px)';
+ });
+}
+function render(){
+ let r=shoe.reduce((a,b)=>a+b,0);remain.textContent=r;decks.textContent=(r/52).toFixed(2);dealt.textContent=416-r;
+ counts.innerHTML=shoe.map((n,i)=>`<span class="pill">${i===1?'A':i}: ${n}</span>`).join('');
+ renderHistory();
+ if(r<6)return;
+ let o=exact(shoe),eb=.95*o.B-o.P,ep=o.P-o.B;
+ bp.textContent=pct(o.B);pp.textContent=pct(o.P);tp.textContent=pct(o.T);
+ bev.textContent=pct(eb);pev.textContent=pct(ep);
+ bev.className='num '+(eb>0?'green':'red');pev.className='num '+(ep>0?'green':'red');
+ signal.textContent=eb>0?'庄注理论EV为正':ep>0?'闲注理论EV为正':'当前没有理论正EV下注';signal.className='num '+(eb>0||ep>0?'green':'muted');
+ let br=Number(bankroll.value)||0;
+ // Kelly按“条件于非和局”的胜负概率计算，分别对应庄5%佣金和闲1:1。
+ const qB=o.B/(1-o.T), qP=o.P/(1-o.T);
+ const kb=Math.max(0,(.95*qB-(1-qB))/.95);
+ const kp=Math.max(0,(qP-(1-qP)));
+ [['bk',kb],['pk',kp],['bhk',kb/2],['phk',kp/2]].forEach(([id,z])=>document.getElementById(id).textContent=(z*100).toFixed(3)+'% / ¥'+(z*br).toFixed(2));
+}
+render();
+</script></body></html>
