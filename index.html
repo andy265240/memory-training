@@ -52,7 +52,7 @@ function exact(sh){
  const s=B+P+T;
  return {B:B/s,P:P/s,T:T/s};
 }
-function pct(x){return(x*100).toFixed(3)+'%'}
+function pct(x){return(x*100).toFixed(4)+'%'}
 function renderHistory(){
  const inner=document.getElementById('historyInner');
  inner.innerHTML='<span class="history-label">已输入牌</span>';
@@ -69,16 +69,19 @@ function render(){
  counts.innerHTML=shoe.map((n,i)=>`<span class="pill">${i===1?'A':i}: ${n}</span>`).join('');
  renderHistory();
  if(r<6)return;
- let o=exact(shoe),eb=.95*o.B-o.P,ep=o.P-o.B;
+ let o=exact(shoe);
+ // 标准百家乐：庄赢净赢0.95，闲赢净赢1；和局均退回本金。
+ // 因此EV(庄)=0.95×P(庄胜)-P(闲胜)，EV(闲)=P(闲胜)-P(庄胜)。
+ let eb=0.95*o.B-o.P,ep=o.P-o.B;
  bp.textContent=pct(o.B);pp.textContent=pct(o.P);tp.textContent=pct(o.T);
  bev.textContent=pct(eb);pev.textContent=pct(ep);
  bev.className='num '+(eb>0?'green':'red');pev.className='num '+(ep>0?'green':'red');
- signal.textContent=eb>0?'庄注理论EV为正':ep>0?'闲注理论EV为正':'当前没有理论正EV下注';signal.className='num '+(eb>0||ep>0?'green':'muted');
+ signal.textContent=eb>0?'庄注理论EV为正（+）':ep>0?'闲注理论EV为正（+）':'当前没有理论正EV下注';signal.className='num '+(eb>0||ep>0?'green':'muted');
  let br=Number(bankroll.value)||0;
  // Kelly按“条件于非和局”的胜负概率计算，分别对应庄5%佣金和闲1:1。
  const qB=o.B/(1-o.T), qP=o.P/(1-o.T);
- const kb=Math.max(0,(.95*qB-(1-qB))/.95);
- const kp=Math.max(0,(qP-(1-qP)));
+ const kb=eb>0 ? Math.max(0,eb/(.95*(o.B+o.P))) : 0;
+ const kp=ep>0 ? Math.max(0,ep/(o.B+o.P)) : 0;
  [['bk',kb],['pk',kp],['bhk',kb/2],['phk',kp/2]].forEach(([id,z])=>document.getElementById(id).textContent=(z*100).toFixed(3)+'% / ¥'+(z*br).toFixed(2));
 }
 render();
