@@ -1,0 +1,333 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f5f6f8"><title>安的百家乐智能路单正EV分析系统｜v16标准路单盲测版</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--text:#17202a;--muted:#77818d;--line:#e5e9ee;--red:#c62828;--blue:#2457c5;--gold:#9a731d;--green:#087f5b;--shadow:0 3px 16px rgba(20,30,45,.06)}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei",sans-serif}.app{max-width:700px;margin:auto;padding:12px 12px 92px}.header{padding:8px 3px 12px}.title{font-size:22px;font-weight:800}.sub{font-size:11px;color:var(--muted);margin-top:4px}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:14px;margin:9px 0;box-shadow:var(--shadow)}h2{font-size:15px;margin:0 0 11px}.top{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.metric,.stat{background:#f8f9fb;border-radius:12px;padding:10px}.metric b{display:block;font-size:16px}.metric span,.stat span{display:block;font-size:10px;color:var(--muted);margin-top:2px}.status{font-size:11px;color:var(--muted);margin-top:9px}.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:#eef1f4;color:#4f5964}.result{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.result button{height:52px;cursor:pointer;font-size:18px;font-weight:800;border:0;border-radius:12px}.B{background:#ffe9e9;color:var(--red)}.P{background:#eef4ff;color:var(--blue)}.T{background:#fff9e9;color:var(--gold)}button,input{font:inherit}button{border:0;border-radius:11px;padding:10px 11px;background:#eef1f4;color:var(--text);font-weight:650}button:active{transform:scale(.98)}.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px}.danger{color:var(--red)}.history{font-size:11px;color:var(--muted);margin-top:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tabs{display:flex;gap:6px;overflow:auto;margin-bottom:9px}.tabs button{white-space:nowrap;font-size:11px;padding:8px 10px}.tabs .on{background:#17202a;color:#fff}.road{overflow-x:auto;overflow-y:hidden;padding-bottom:2px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}.grid{display:flex;gap:3px;min-width:max-content}.col{width:23px;display:flex;flex-direction:column;gap:3px}.dot{width:23px;height:23px;border:1.5px solid #cfd5dc;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800}.dot.B{border-color:#e3a1a1;color:var(--red)}.dot.P{border-color:#9eb8ef;color:var(--blue)}.dot.T{border-color:#d8c27d;color:var(--gold)}.dot.mark{font-size:14px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:7px}.stat b{display:block;margin-top:4px;font-size:15px}.positive{color:var(--green)}.negative{color:var(--red)}.evgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.ev{border:1px solid var(--line);border-radius:12px;padding:11px}.ev small{color:var(--muted);font-size:10px}.ev strong{display:block;font-size:19px;margin-top:4px}.line{height:1px;background:var(--line);margin:11px 0}.inputrow{display:flex;gap:7px}.inputrow input{min-width:0;flex:1;border:1px solid var(--line);background:#fafbfc;border-radius:10px;padding:10px}.note{font-size:10px;line-height:1.55;color:var(--muted);margin-top:8px}.panel{display:none}.panel.show{display:block}.nav{position:fixed;z-index:5;bottom:0;left:50%;transform:translateX(-50%);width:min(700px,100%);display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-top:1px solid var(--line)}.nav button{background:transparent;font-size:10px}.log{font-size:10px;background:#f7f8fa;border-radius:10px;padding:9px;max-height:180px;overflow:auto;white-space:pre-wrap}.test{border-left:3px solid #9aa4af;padding-left:9px;margin-top:8px}.ok{color:var(--green)}.bad{color:var(--red)}.shoeSummary{margin-top:10px;padding:12px;border-radius:12px;background:#f7f8fa}.shoeSummary .big{font-size:22px;font-weight:800}.shoeSummary .row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.shoeSummary .item{background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px}.shoeSummary small{display:block;color:var(--muted);font-size:10px;margin-bottom:3px}@media(max-width:390px){.top{grid-template-columns:1fr 1fr}.top .metric:last-child{grid-column:1/3}}
+.B{background:#fff0f0!important;color:#c62828!important}.P{background:#eef4ff!important;color:#2457c5!important}.dot.B{border-color:#e3a1a1!important;color:#c62828!important}.dot.P{border-color:#9eb8ef!important;color:#2457c5!important}</style></head><body><div class="app">
+<div class="header"><div class="title">安的百家乐智能路单正EV分析系统</div><div class="sub">v16 · 标准路单 · 三小路深度集成 · 200万局预训练基准 · 概率校准 · 实战回放</div></div>
+<section class="card"><div class="top"><div class="metric"><b id="bank">¥1,000</b><span>当前本金</span></div><div class="metric"><b id="rounds">0</b><span>本靴局数</span></div><div class="metric"><b id="learned">0</b><span>实战学习</span></div></div><div class="status">预训练：<span class="badge">2,000,000局预训练基准</span>　总学习：<span class="badge" id="totalLearned">2,000,000</span></div><div class="status">状态：<span class="badge" id="status">等待输入</span></div></section>
+<section class="card"><h2>路单输入</h2><div class="result"><button class="B" onclick="add('B')">庄</button><button class="P" onclick="add('P')">闲</button><button class="T" onclick="add('T')">和</button></div><div class="actions"><button onclick="undo()">撤销</button><button class="danger" onclick="clearCurrent()">删除</button><button onclick="finishShoe()">结束本靴</button></div><div class="history" id="hist">暂无</div></section>
+<section class="card"><h2>路单</h2><div class="tabs"><button class="on" onclick="roadTab('big',this)">大路</button><button onclick="roadTab('eye',this)">大眼仔</button><button onclick="roadTab('small',this)">小路</button><button onclick="roadTab('cock',this)">曱甴路</button></div><div class="road"><div class="grid" id="road"></div></div><div class="note">红=庄，蓝=闲，金=和。后三种路严格按标准衍生规则由大路计算；和局不改变主序。四条路均采用6行标准落点与连续超6行向右延伸规则。模型加入三小路一致性、概率校准、时间衰减与样本外监控。</div></section>
+<section class="card"><h2>智能分析</h2><div class="grid2"><div class="stat"><span>当前局面</span><b id="sit">—</b></div><div class="stat"><span>历史相似度</span><b id="sim">样本不足</b></div><div class="stat"><span>条件概率 · 庄</span><b id="pb">—</b></div><div class="stat"><span>条件概率 · 闲</span><b id="pp">—</b></div><div class="stat"><span>有效样本</span><b id="n">0</b></div><div class="stat"><span>200万局联动</span><b id="preLink">已启用</b></div><div class="stat"><span>稳定性</span><b id="stab">样本不足</b></div><div class="stat"><span>样本外验证</span><b id="oos">样本不足</b></div><div class="stat"><span>当前序列</span><b id="streak">—</b></div><div class="stat"><span>预测置信度</span><b id="conf">—</b></div><div class="stat"><span>预测模型</span><b id="model">—</b></div></div><div class="evgrid"><div class="ev"><small>模型预测 · 庄</small><strong id="predB">—</strong></div><div class="ev"><small>模型预测 · 闲</small><strong id="predP">—</strong></div></div><div class="evgrid"><div class="ev"><small>庄模型 EV（5%抽水）</small><strong id="evB">—</strong></div><div class="ev"><small>闲模型 EV</small><strong id="evP">—</strong></div></div><div class="stat" style="margin-top:8px"><span>系统当前判断</span><b id="decision">样本不足</b></div><div class="stat" style="margin-top:8px"><span>下一口建议</span><b id="action">暂不出手</b></div><div class="note">系统会根据历史路单模式自动估计下一局庄/闲概率，并计算对应模型EV；只有样本达到门槛才显示凯利。这里的“正EV”是路单模型统计值，不等于已证明赌场真实正期望。系统会把预测概率、EV和出手建议使用同一套数据计算。</div></section>
+<section class="card"><h2>正EV + 凯利</h2><div class="grid2"><div class="stat"><span>全凯利</span><b id="fk">¥0</b></div><div class="stat"><span>半凯利</span><b id="hk">¥0</b></div></div><div class="inputrow" style="margin-top:9px"><input id="bankInput" type="number" min="0" step="1" placeholder="修改本金，例如 1000"><button onclick="setBank()">保存本金</button></div><div class="note">只有经过样本门槛且 EV>0 时才给出凯利金额；不满足条件时显示 ¥0。</div></section>
+<div id="learnPanel" class="card panel"><h2>自动学习记录</h2><div id="learnInfo" class="log"></div><div class="note">200万局预训练不是装饰数据：系统会按当前局面的庄/闲、连庄/连闲长度、局数区间寻找精确及邻近状态，并作为受上限控制的历史先验参与最终概率、EV与信号计算。
+学习方式：不是把未来结果提前写进模型。系统先用当时已有历史数据做预测，等真实下一局结果出现后，才把“当时局面 + 真实结果”写入学习库，因此可持续做在线增量学习，并记录当时预测是否命中。</div></div><div id="historyPanel" class="card panel"><h2>历史数据</h2><div id="historyInfo" class="log"></div></div><div id="backPanel" class="card panel"><h2>严格盲测 / 2,000,000局基准测试</h2><div class="inputrow"><input id="blindInput" placeholder="输入庄闲序列，例如 BPPBBPBP（和局可写T）"><button onclick="runBlindUI()">开始盲测</button></div><div id="blindResult" class="test"></div><button style="width:100%;margin-top:8px" onclick="benchmark()">运行 2,000,000 局完整发牌基准</button><div id="bench" class="test"></div><div class="note">盲测严格逐局向前滚动：预测第N局时只允许看到第1～N-1局，绝不读取后面的真实结果。2,000,000局基准仅用于验证标准百家乐随机发牌模拟器，不把模拟结果冒充真实历史优势。</div></div><div id="backupPanel" class="card panel"><h2>数据备份 / 导入</h2><button style="width:100%" onclick="exportData()">导出 JSON 备份</button><input id="imp" type="file" accept=".json" onchange="importData(event)" style="margin-top:8px;width:100%"></div>
+</div><section class="card" id="shoeSummaryPanel" style="display:none"><h2>本靴最终预测总结</h2><div id="shoeSummary" class="shoeSummary"></div></section>
+<div class="nav"><button onclick="panel('learnPanel')">学习记录</button><button onclick="panel('historyPanel')">历史数据</button><button onclick="panel('backPanel')">回测</button><button onclick="panel('backupPanel')">备份/导入</button></div>
+<script>const KEY='andi_baccarat_pro_v5';
+const PRETRAIN_N=2000000;
+const PRETRAIN={"P|1|0":[2,1,0],"B|1|0":[1,1,0],"B|2|0":[1,0,0],"B|3|0":[1,0,0],"B|4|0":[0,1,0],"P|2|0":[1,0,0],"B|1|1":[2,0,0],"B|2|1":[1,1,0],"B|3|1":[0,1,0],"P|1|1":[1,1,0],"P|2|1":[0,1,0],"P|3|1":[0,1,0],"P|4|1":[1,0,0],"B|1|2":[1,2,0],"P|1|2":[1,1,0],"P|2|2":[0,1,0],"P|3|2":[1,0,0],"B|2|2":[1,0,0],"B|3|2":[1,0,0],"B|4|2":[1,0,0],"B|5|3":[1,1,0],"P|1|3":[0,1,0],"P|2|3":[0,1,0],"P|3|3":[1,0,0],"B|1|3":[1,0,0],"B|2|3":[1,0,0],"B|3|3":[1,0,0],"B|4|3":[1,0,0],"B|6|3":[1,0,0],"B|7|4":[1,0,0],"B|8|4":[0,1,0],"P|1|4":[3,1,0],"B|1|4":[1,2,0],"B|2|4":[0,1,0],"P|2|5":[0,2,0],"P|3|5":[1,1,0],"B|1|5":[1,1,0],"P|1|5":[0,1,0],"P|4|5":[1,0,0],"B|2|5":[1,0,0],"B|3|5":[1,0,0],"B|4|6":[0,1,0],"P|1|6":[2,1,0],"B|1|6":[2,1,0],"B|2|6":[1,1,0],"P|2|6":[1,0,0],"B|3|7":[1,1,0],"P|1|7":[1,1,0],"B|1|7":[2,0,0],"B|2|7":[1,1,0],"B|4|7":[0,1,0],"P|2|7":[1,0,0],"P|1|8":[0,2,0],"P|2|8":[1,1,0],"B|1|8":[2,0,0],"B|2|8":[1,0,0],"B|3|8":[0,1,0],"P|3|8":[0,1,0],"P|4|8":[1,0,0],"B|2|9":[2,1,0],"P|1|9":[1,1,0],"P|2|9":[1,0,0],"B|1|9":[2,0,0],"B|3|9":[1,1,0],"B|4|10":[1,0,0],"B|5|10":[1,0,0],"B|6|10":[0,1,0],"P|1|10":[1,1,0],"B|1|10":[2,0,0],"B|2|10":[1,1,0],"P|2|10":[1,0,0],"B|3|11":[1,0,0],"B|4|11":[1,0,0],"B|5|11":[1,0,0],"B|6|11":[0,1,0],"P|1|11":[1,2,0],"P|2|11":[1,0,0],"B|1|11":[0,2,0],"P|2|12":[1,1,0],"B|1|12":[1,2,0],"P|1|12":[2,1,0],"P|3|12":[1,0,0],"B|2|12":[0,1,0],"B|1|13":[1,1,0],"B|2|13":[1,0,0],"B|3|13":[1,0,0],"B|4|13":[0,1,0],"P|1|13":[0,2,0],"P|2|13":[1,1,0],"P|3|13":[0,1,0],"P|4|14":[1,1,0],"P|5|14":[1,0,0],"B|1|14":[1,0,0],"B|2|14":[1,0,0],"B|3|14":[1,0,0],"B|4|14":[0,1,0],"P|1|14":[0,1,0],"P|2|14":[0,1,0],"P|3|14":[0,1,0],"B|1|15":[2,2,0],"P|1|15":[2,1,0],"B|2|15":[0,1,0],"P|2|15":[0,1,0],"P|3|15":[1,0,0],"B|2|16":[1,1,0],"P|1|16":[1,1,0],"P|2|16":[0,1,0],"P|3|16":[1,0,0],"B|1|16":[1,1,0],"B|3|16":[1,0,0],"B|4|16":[0,1,0],"P|1|17":[1,2,0],"B|1|17":[0,3,0],"P|2|17":[1,1,0],"P|3|17":[0,1,0],"P|4|17":[1,0,0],"P|1|18":[2,1,0],"B|1|18":[0,2,0],"P|2|18":[0,1,0],"P|3|18":[0,1,0],"P|4|18":[0,1,0],"P|5|18":[0,1,0],"P|6|18":[1,0,0],"B|1|19":[1,4,0],"P|1|19":[3,1,0],"P|2|19":[1,0,0],"B|2|20":[116939,112641,0],"P|1|20":[228855,223100,0],"B|1|20":[229580,222375,0],"P|2|20":[113491,109609,0],"P|3|20":[55600,54009,0],"B|3|20":[59147,57792,0],"P|4|20":[27367,26642,0],"P|5|20":[13515,13127,0],"P|6|20":[6670,6457,0],"B|4|20":[29956,29191,0],"B|5|20":[15285,14671,0],"P|7|20":[3331,3126,0],"P|8|20":[3126,3165,0],"B|6|20":[7762,7523,0],"B|7|20":[3917,3845,0],"B|8|20":[3905,3917,0]};
+const INIT={bankroll:1000,current:[],shoes:[],learn:[],activeRoad:'big',learnMeta:{trained:0,correct:0,wrong:0,lastLearnAt:null}};
+let data=load(); data.shoeStartLearn=Number.isInteger(data.shoeStartLearn)?data.shoeStartLearn:data.learn.length;
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY));if(!x||!Array.isArray(x.current))return {...INIT,activeRoad:'big'};x.current=x.current.filter(v=>v==='B'||v==='P'||v==='T');x.learn=Array.isArray(x.learn)?x.learn:[];x.shoes=Array.isArray(x.shoes)?x.shoes:[];x.learnMeta=x.learnMeta||{trained:x.learn.length,correct:0,wrong:0,lastLearnAt:null};x.activeRoad=x.activeRoad||'big';x.bankroll=Number.isFinite(Number(x.bankroll))?Number(x.bankroll):1000;return x}catch{return {...INIT,activeRoad:'big'}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data))} function money(x){return '¥'+Math.round(x).toLocaleString('zh-CN')}
+function clean(s){return s.filter(x=>x!=='T')} function feature(s){
+  const c=clean(s); if(!c.length)return null;
+  const last=c[c.length-1]; let streak=0;
+  for(let i=c.length-1;i>=0&&c[i]===last;i--)streak++;
+  const tail=c.slice(-12).join('');
+  return {last,streak,len:c.length,tail};
+}
+function key(f){return f?`${f.last}|${Math.min(f.streak,8)}|${Math.min(Math.floor(f.len/10),20)}`:''}
+function preModel(f){
+  const s=f?PRETRAIN[key(f)]:null;
+  return s?{B:s[0],P:s[1],n:s[0]+s[1]}:{B:0,P:0,n:0};
+}
+function liveModel(f){
+  let B=0,P=0,wB=0,wP=0;
+  if(!f)return{B,P,n:0,wB,wP};
+  for(const r of data.learn){
+    if(!r.f||(r.next!=='B'&&r.next!=='P'))continue;
+    const g=r.f;
+    if(g.last!==f.last || Math.abs(g.streak-f.streak)>2 || Math.abs(g.len-f.len)>20)continue;
+    const tailScore=(g.tail&&f.tail)?commonSuffix(g.tail,f.tail):0;
+    const w=Math.exp(-(Math.abs(g.streak-f.streak)*0.7+Math.abs(g.len-f.len)/20)/2)*(1+tailScore*0.08);
+    if(r.next==='B'){B++;wB+=w}else{P++;wP+=w}
+  }
+  return{B,P,n:B+P,wB,wP};
+}
+function commonSuffix(a,b){
+  let n=0;
+  for(let i=1;i<=Math.min(a.length,b.length);i++){if(a[a.length-i]===b[b.length-i])n++;else break}
+  return n;
+}
+function pretrainStats(f){
+  if(!f)return{B:0,P:0,n:0,exact:0,near:0};
+  let B=0,P=0,exact=0,near=0;
+  const L=Math.min(f.len,200), S=Math.min(f.streak,8);
+  for(const [k,v] of Object.entries(PRETRAIN)){
+    const a=k.split('|'), last=a[0], st=Number(a[1]), lb=Number(a[2]);
+    if(last!==f.last)continue;
+    const db=Math.abs(st-S), dl=Math.abs(lb-Math.min(Math.floor(L/10),20));
+    if(db===0 && dl===0){B+=v[0];P+=v[1];exact+=v[0]+v[1];}
+    else if(db<=1 && dl<=2){
+      const w=Math.exp(-0.9*db-0.45*dl);
+      B+=v[0]*w; P+=v[1]*w; near+= (v[0]+v[1])*w;
+    }
+  }
+  return{B,P,n:B+P,exact,near};
+}
+function pretrainPrior(f){ const m=pretrainStats(f); return m.n?m.B/m.n:.5; }
+function roadConsensus(f){
+  const rf=roadFeatures(data.current), vals=[];
+  for(const name of ['eye','small','cock']){
+    const r=rf[name]; if(r&&r.last) vals.push(r.last);
+  }
+  const b=vals.filter(x=>x==='B').length, pp=vals.filter(x=>x==='P').length;
+  return {b,pp,n:vals.length,ratio:vals.length?Math.max(b,pp)/vals.length:0,side:b>pp?'B':pp>b?'P':null};
+}
+function calibration(p,records){
+  // 基于最近真实预测做轻量概率校准；样本不足时只做极小收缩，避免过拟合。
+  const a=records.filter(r=>Number.isFinite(r.pb)&&Number.isFinite(r.next==='B'?1:0)).slice(-800);
+  if(a.length<80)return Math.max(.05,Math.min(.95,.5+(p-.5)*.92));
+  const bins=[]; for(let i=0;i<10;i++)bins.push({n:0,y:0});
+  for(const r of a){const k=Math.min(9,Math.max(0,Math.floor(r.pb*10)));bins[k].n++;if(r.next==='B')bins[k].y++;}
+  const k=Math.min(9,Math.max(0,Math.floor(p*10))), bin=bins[k];
+  if(!bin||bin.n<25)return Math.max(.05,Math.min(.95,.5+(p-.5)*.92));
+  const obs=(bin.y+1)/(bin.n+2), shrink=Math.min(1,bin.n/120);
+  return Math.max(.05,Math.min(.95,p*(1-shrink)+obs*shrink));
+}
+function ensembleModel(f){
+  if(!f)return{B:.5,P:.5,n:0,rawN:0,weightedN:0,evidence:0,confidence:0,model:'中性先验',weights:{eye:30,small:30,cock:30,big:10},consensus:0};
+  const seq=clean(data.current), rf=roadFeatures(seq), records=data.learn.filter(r=>r.seq&&(r.next==='B'||r.next==='P'));
+  const base={eye:30,small:30,cock:30,big:10}, stats={eye:{b:0,p:0,m:0},small:{b:0,p:0,m:0},cock:{b:0,p:0,m:0},big:{b:0,p:0,m:0}};
+  let evidence=0,weightedN=0;
+  // 三小路90%：按相似程度寻找历史状态，并对旧样本做时间衰减。
+  for(const r of records){
+    const age=Math.max(0,Date.now()-(r.at||Date.now())), decay=Math.max(.35,Math.exp(-age/(1000*60*60*24*90)));
+    const q=roadFeatures(r.seq);
+    let matched=false;
+    for(const name of ['eye','small','cock']){
+      const m=roadMatch(q[name],rf[name]); if(m<=0)continue;
+      matched=true; const w=Math.min(18,Math.pow(m,1.18))*decay; stats[name][r.next==='B'?'b':'p']+=w; stats[name].m+=w; weightedN+=w;
+    }
+    if(matched)evidence++;
+    const g=feature(r.seq), gm=(g&&g.last===f.last?3:0)+(g&&Math.abs(g.streak-f.streak)<=1?2:0)+(g?commonSuffix(g.tail||'',f.tail||''):0);
+    if(gm>0){const w=Math.min(8,gm)*decay;stats.big[r.next==='B'?'b':'p']+=w;stats.big.m+=w;weightedN+=w;}
+  }
+  // 小路一致性：只调节置信度，不突破90/10主框架，避免重复计权。
+  const cs=roadConsensus(f), consensus=cs.n?cs.ratio:0;
+  const raw={eye:base.eye,small:base.small,cock:base.cock};
+  const core=raw.eye+raw.small+raw.cock, weights={eye:raw.eye/core*90,small:raw.small/core*90,cock:raw.cock/core*90,big:10};
+  let p=.5;
+  for(const name of ['eye','small','cock','big']){
+    const z=stats[name], q=z.m?(z.b+1)/(z.b+z.p+2):.5;
+    p+=weights[name]/100*(q-.5);
+  }
+  // 2,000,000局不是只显示在界面：这里作为真正的历史先验参与最终概率。
+  // 采用“精确状态 + 邻近状态”的贝叶斯式伪样本，并设置上限，避免200万基准压过真实实战数据。
+  const pst=pretrainStats(f), prior=pst.n?pst.B/pst.n:.5;
+  const priorPseudo=Math.min(260, Math.max(20, Math.sqrt(Math.max(1,pst.n))*3.2));
+  const livePseudo=Math.max(1, weightedN);
+  const priorBlend=Math.min(.28, priorPseudo/(priorPseudo+livePseudo));
+  p=p*(1-priorBlend)+prior*priorBlend;
+  if(cs.side&&consensus>=2/3)p += (cs.side==='B'?1:-1)*Math.min(.025,(consensus-1/2)*.05);
+  const recent=records.slice(-250), same=recent.filter(r=>r.f&&r.f.last===f.last);
+  if(same.length>=20){const rp=same.filter(r=>r.next==='B').length/same.length;p=p*.94+rp*.06;}
+  const rawP=Math.max(.02,Math.min(.98,p)), pb=calibration(rawP,records), conf=Math.min(.995,Math.abs(pb-.5)*2.2*Math.min(1,weightedN/120)*(0.65+0.35*consensus));
+  return{B:pb,P:1-pb,n:Math.round(evidence),rawN:evidence,weightedN,evidence,confidence:conf,model:'A模型：三小路90% + 大路10% · 200万局先验 · 概率校准 · 时间衰减',weights,consensus,pretrain:{n:pst.n,exact:pst.exact,near:pst.near,prior,blend:priorBlend}};
+}
+function wilson(p,n){if(!n)return[0,1];const z=1.96,den=1+z*z/n,center=(p+z*z/(2*n))/den,half=z*Math.sqrt((p*(1-p)/n)+(z*z/(4*n*n)))/den;return[Math.max(0,center-half),Math.min(1,center+half)]}
+function analysis(){
+  const f=feature(data.current),live=liveModel(f),em=ensembleModel(f),pb=em.B,pp=em.P,n=em.n;
+  const evB=.95*pb-pp,evP=pp-pb,ci=wilson(pb,Math.max(1,n)),pred=pb>pp?'B':pp>pb?'P':'平';
+  const signal=em.consensus>=0.999?'强':em.consensus>=2/3?'中':'弱';
+  let action='暂不出手',actionSide=null,reason='模型优势不足';
+  if(em.evidence<60)reason='历史匹配样本不足';
+  else if(em.weightedN<80)reason='有效证据不足';
+  else if(em.consensus<2/3)reason='三小路信号不一致';
+  else if(Math.max(evB,evP)<=.01)reason='模型EV未超过阈值';
+  else if(evB>evP&&pb>pp){action='模型信号：庄';actionSide='B';reason='三小路一致且模型EV达标'}
+  else if(evP>evB&&pp>pb){action='模型信号：闲';actionSide='P';reason='三小路一致且模型EV达标'}
+  const bestSide=evB>=evP?'B':'P',bestEV=Math.max(evB,evP),best=Math.max(0,bestEV/(bestSide==='B'?.95:1));
+  return{f,live,em,n,pb,pp,evB,evP,ci,pred,action,actionSide,best,bestSide,confidence:em.confidence,model:em.model,signal,reason,consensus:em.consensus};
+}
+function add(x){
+  if(!data.current.length){data.shoeStartLearn=data.learn.length;const sp=document.getElementById('shoeSummaryPanel');if(sp)sp.style.display='none';}
+  const before=analysis(),prev=feature(data.current),snapshot=data.current.slice();
+  data.current.push(x);
+  if(prev&&x!=='T'){
+    const pred=before.pred==='B'||before.pred==='P'?before.pred:null;
+    data.learn.push({f:prev,seq:snapshot,next:x,at:Date.now(),pred,hit:pred?pred===x:null,pb:before.pb,evB:before.evB,evP:before.evP,signal:before.signal,consensus:before.consensus});
+    data.learnMeta.trained++; if(pred===x)data.learnMeta.correct++;else if(pred)data.learnMeta.wrong++; data.learnMeta.lastLearnAt=new Date().toISOString();
+  }
+  save();render();
+}
+
+function undo(){if(data.current.length){data.current.pop();save();render()}}
+function clearCurrent(){if(confirm('删除当前本靴全部路单？')){data.current=[];save();render()}}
+function shoeSummary(start,end){const a=data.learn.slice(start,end).filter(r=>r.pred==='B'||r.pred==='P');const n=a.length,hit=a.filter(r=>r.hit).length,rate=n?hit/n:null,avgP=n?a.reduce((z,r)=>z+(r.pb??.5),0)/n:null,avgEV=n?a.reduce((z,r)=>z+Math.max(r.evB??-1,r.evP??-1),0)/n:null,b=a.filter(r=>r.pred==='B'),p=a.filter(r=>r.pred==='P'),br=b.length?b.filter(r=>r.hit).length/b.length:null,pr=p.length?p.filter(r=>r.hit).length/p.length:null,recent=k=>{const q=a.slice(-k);return q.length?q.filter(r=>r.hit).length/q.length:null},fmt=v=>v==null?'—':(v*100).toFixed(2)+'%';return `<div class="big">本靴实际预测命中率：${fmt(rate)}</div><div class="row"><div class="item"><small>总局数</small>${end-start}</div><div class="item"><small>有效预测</small>${n}</div><div class="item"><small>命中次数</small>${hit}</div><div class="item"><small>平均预测概率</small>${fmt(avgP)}</div><div class="item"><small>庄预测命中率</small>${fmt(br)}</div><div class="item"><small>闲预测命中率</small>${fmt(pr)}</div><div class="item"><small>平均EV</small>${fmt(avgEV)}</div><div class="item"><small>最近20次</small>${fmt(recent(20))}</div><div class="item"><small>最近50次</small>${fmt(recent(50))}</div><div class="item"><small>200万局联动</small>已纳入最终概率模型</div></div><div class="note">“实际预测命中率”只统计结果发生前已经产生的有效预测，不把结果倒灌进预测；盲测严格按逐局历史窗口计算。</div>`}
+function selfTestRoads(){return roadSelfTest();}
+function blindTest(seq){
+  const cleanSeq=clean(seq), rows=[];
+  let correct=0,logloss=0,brier=0,n=0,evN=0,evCorrect=0,evSum=0,strongN=0,strongCorrect=0,midN=0,midCorrect=0;
+  const savedLearn=data.learn; data.learn=[];
+  for(let i=1;i<cleanSeq.length;i++){
+    const history=cleanSeq.slice(0,i), actual=cleanSeq[i];
+    const old=data.current; data.current=history;
+    let a; try{a=analysis()}catch(e){a=null}
+    data.current=old;
+    if(!a)continue;
+    const pb=a.pb, pred=pb>=.5?'B':'P', y=actual==='B'?1:0;
+    if(pred===actual)correct++;
+    const pr=actual==='B'?pb:1-pb;
+    logloss+=-Math.log(Math.max(.0001,Math.min(.9999,pr)));
+    brier+=(pb-y)*(pb-y); n++;
+    const bestEV=Math.max(a.evB,a.evP);
+    if(bestEV>0){evN++;evSum+=bestEV;if(pred===actual)evCorrect++;}
+    const sig=Math.abs(pb-.5)*2;
+    if(sig>=.16){strongN++;if(pred===actual)strongCorrect++;}
+    else if(sig>=.08){midN++;if(pred===actual)midCorrect++;}
+    rows.push({index:i+1,pb,actual,pred,hit:pred===actual,evB:a.evB,evP:a.evP,signal:a.signal});
+  }
+  data.learn=savedLearn;
+  return {n,correct,hitRate:n?correct/n:null,logLoss:n?logloss/n:null,brier:n?brier/n:null,evN,evHitRate:evN?evCorrect/evN:null,avgPositiveEV:evN?evSum/evN:null,strongN,strongHitRate:strongN?strongCorrect/strongN:null,midN,midHitRate:midN?midCorrect/midN:null,rows};
+}
+function rollingValidation(seq){
+  const s=clean(seq), saved=data.learn, rows=[]; let hit=0,n=0,ll=0,br=0; data.learn=[];
+  for(let i=1;i<s.length;i++){
+    const old=data.current;data.current=s.slice(0,i);let a;try{a=analysis()}catch(e){a=null}data.current=old;if(!a)continue;
+    const y=s[i],pb=a.pb,pred=pb>=.5?'B':'P',pr=y==='B'?pb:1-pb;
+    if(pred===y)hit++;ll+=-Math.log(Math.max(.0001,Math.min(.9999,pr)));br+=(pb-(y==='B'?1:0))**2;n++;rows.push({i,pb,y,hit:pred===y});
+  }
+  data.learn=saved;return {n,hit:n?hit/n:null,logLoss:n?ll/n:null,brier:n?br/n:null,rows};
+}
+function calibrationReport(seq){
+  const s=clean(seq), saved=data.learn, bins=Array.from({length:10},()=>({n:0,sumP:0,y:0}));data.learn=[];
+  for(let i=1;i<s.length;i++){const old=data.current;data.current=s.slice(0,i);let a;try{a=analysis()}catch(e){a=null}data.current=old;if(!a)continue;const k=Math.min(9,Math.max(0,Math.floor(a.pb*10))),y=s[i]==='B'?1:0;bins[k].n++;bins[k].sumP+=a.pb;bins[k].y+=y;}
+  data.learn=saved;return bins.map((b,i)=>({range:`${i*10}-${i*10+10}%`,n:b.n,pred:b.n?b.sumP/b.n:null,actual:b.n?b.y/b.n:null})).filter(x=>x.n);
+}
+function roadSelfTest(){
+  const cases=[
+    'BBBBBBBBBBBB',
+    'PPPPPPPPPPPP',
+    'BPBPBPBPBPBP',
+    'BBBBBBPPPPPPBBBBBB',
+    'BBPPBBPPBPPBBP',
+    'BBBBBBPBBBBBBPBBBBBB'
+  ];
+  const checks=[];
+  for(const raw of cases){
+    const seq=raw.split(''), b=bigRoad(seq);
+    const basic=b.length>0&&b.every(c=>c.filter(v=>v!==undefined).length<=6)&&b.flat().filter(v=>v!==undefined).length===seq.length;
+    const ds=['eye','small','cock'].map(t=>{const a=derivedRoad(seq,t);return a.every(x=>x==='R'||x==='B')});
+    checks.push(basic&&ds.every(Boolean));
+  }
+  return checks.every(Boolean);
+}
+function runBlindUI(){const el=document.getElementById('blindInput'),box=document.getElementById('blindResult');const raw=(el?.value||'').toUpperCase().replace(/[^BPT]/g,'');if(raw.length<20){box.innerHTML='<span class="bad">至少输入20局庄/闲/和序列。</span>';return}const r=blindTest(raw.split('')),c=calibrationReport(raw.split(''));box.innerHTML=`<b>严格盲测完成（仅A模型）</b><br>有效预测：${r.n}局　命中：${r.correct}局<br>实际命中率：${(r.hitRate*100).toFixed(2)}%<br>LogLoss：${r.logLoss.toFixed(4)}　Brier：${r.brier.toFixed(4)}<br>正EV样本：${r.evN}局　正EV实际命中率：${r.evHitRate==null?'—':(r.evHitRate*100).toFixed(2)+'%'}<br>强信号：${r.strongN}局　命中率：${r.strongHitRate==null?'—':(r.strongHitRate*100).toFixed(2)+'%'}<br>中信号：${r.midN}局　命中率：${r.midHitRate==null?'—':(r.midHitRate*100).toFixed(2)+'%'}<br><small>概率校准：${c.map(x=>x.range+' 预测'+(x.pred*100).toFixed(1)+'% / 实际'+(x.actual*100).toFixed(1)+'%（'+x.n+'）').join(' · ')}</small>`;}
+function setEV(id,v){const e=document.getElementById(id);if(!e)return;e.textContent=(v*100).toFixed(3)+'%';e.className=v>0?'positive':v<0?'negative':''}
+function validation(){
+  const a=data.learn.filter(r=>r.seq&&(r.next==='B'||r.next==='P')).sort((x,y)=>(x.at||0)-(y.at||0));
+  if(a.length<200)return{text:'深度样本不足（至少200条带完整路单快照）',hit:null,n:0};
+  const seq=a.map(r=>r.next),r=rollingValidation(seq);
+  return r.n?{text:`严格滚动样本外：命中 ${(r.hit*100).toFixed(1)}%（${r.n}局） · LogLoss ${r.logLoss.toFixed(3)} · Brier ${r.brier.toFixed(3)}`,hit:r.hit,n:r.n}:{text:'验证样本不足',hit:null,n:0};
+}
+function analysisSafe(){const f=feature(data.current);return {f,em:{B:1,P:1,n:0,confidence:0,model:'等待数据',weights:{eye:30,small:30,cock:30,big:10}},n:0,pb:.5,pp:.5,evB:0,evP:0,ci:[0,1],pred:'平',action:'暂不出手',best:0,bestSide:'B',confidence:0,model:'等待数据'}}
+
+function render(){
+  renderRoad();let a,v;try{a=analysis();v=validation()}catch(e){console.error(e);a=analysisSafe();v={text:'分析暂不可用',hit:null,n:0}}
+  document.getElementById('bank').textContent=money(data.bankroll);document.getElementById('rounds').textContent=data.current.length;document.getElementById('learned').textContent=data.learn.length.toLocaleString();document.getElementById('totalLearned').textContent=(PRETRAIN_N+data.learn.length).toLocaleString();document.getElementById('status').textContent=data.current.length?'分析中':'等待输入';document.getElementById('hist').textContent=data.current.length?data.current.map(x=>x==='B'?'庄':x==='P'?'闲':'和').join(' · '):'暂无';document.getElementById('sit').textContent=a.f?(a.f.last==='B'?'最近：庄':'最近：闲'):'—';document.getElementById('sim').textContent=a.n?Math.min(99,Math.round(50+a.n/20))+'%':'样本不足';document.getElementById('pb').textContent=(a.pb*100).toFixed(2)+'%';document.getElementById('pp').textContent=(a.pp*100).toFixed(2)+'%';document.getElementById('n').textContent=Math.round(a.n).toLocaleString();document.getElementById('preLink').textContent=a.em&&a.em.pretrain?('已联动 · '+Math.round(a.em.pretrain.n).toLocaleString()+'样本'): '已启用';document.getElementById('predB').textContent=(a.pb*100).toFixed(2)+'%';document.getElementById('predP').textContent=(a.pp*100).toFixed(2)+'%';document.getElementById('stab').textContent=a.n>=100&&a.ci[1]-a.ci[0]<.16?'较稳定':'波动较大';document.getElementById('oos').textContent=v.text;document.getElementById('conf').textContent=(a.confidence*100).toFixed(1)+'%';document.getElementById('model').textContent=a.model;document.getElementById('streak').textContent=a.f?(a.f.last==='B'?'庄':'闲')+' × '+a.f.streak:'—';setEV('evB',a.evB);setEV('evP',a.evP);document.getElementById('decision').textContent=a.evB>0?'庄：模型正EV':a.evP>0?'闲：模型正EV':'庄闲均无正EV';document.getElementById('action').textContent=a.action+'（'+a.reason+'）';document.getElementById('action').className=a.action.includes('模型信号')?'positive':'';const cap=Math.min(a.best,data.bankroll?0.02:0);document.getElementById('fk').textContent=money(data.bankroll*cap);document.getElementById('hk').textContent=money(data.bankroll*cap/2);document.getElementById('learnInfo').textContent=`预训练基准：${PRETRAIN_N.toLocaleString()} 局（已参与当前概率联动）
+实战学习：${data.learn.length.toLocaleString()} 条
+总学习样本：${(PRETRAIN_N+data.learn.length).toLocaleString()}
+保存牌靴：${data.shoes.length} 靴
+在线学习：先预测，真实结果后写入
+当前信号：${a.signal} · 三小路一致度：${Math.round(a.consensus*100)}%
+实战历史预测命中率：${data.learnMeta.trained?((data.learnMeta.correct/data.learnMeta.trained)*100).toFixed(1)+'%':'—'}`;document.getElementById('historyInfo').textContent=JSON.stringify(data.shoes.slice(-10),null,2);
+}
+
+function standardRoad(items){
+  // 通用标准路：最多6行；同色向下；到第6行后向右延伸；换色新开栏。
+  const cols=[];
+  const occupied=(c,r)=>!!(cols[c]&&cols[c][r]!==undefined);
+  for(const x of items){
+    if(!cols.length){cols.push([x]);continue;}
+    let c=cols.length-1, col=cols[c];
+    if(col[0]===x){
+      const r=col.length;
+      if(r<6 && !occupied(c,r)) col[r]=x;
+      else{
+        let nc=c+1;
+        while(occupied(nc,5)) nc++;
+        if(!cols[nc]) cols[nc]=[];
+        cols[nc][5]=x;
+      }
+    }else{
+      let nc=c+1;
+      while(occupied(nc,0)) nc++;
+      if(!cols[nc]) cols[nc]=[];
+      cols[nc][0]=x;
+    }
+  }
+  return cols;
+}
+function bigRoad(seq){
+  // 标准百家乐大路：和局不占主路格；庄/闲按主序排列。
+  return standardRoad(clean(seq));
+}
+function derivedRoad(seq,type){
+  // 标准衍生路：只由大路结构派生，不读取庄/闲颜色作为结果。
+  // Big Eye Boy / Small Road / Cockroach Road 分别回看 1/2/3 栏。
+  // 每条衍生路从“对应起始栏的第二颗”开始产生第一颗标记。
+  const cols=bigRoad(seq), out=[];
+  const gap=type==='eye'?1:type==='small'?2:3;
+  if(cols.length<=gap)return out;
+  for(let c=gap;c<cols.length;c++){
+    const col=cols[c]||[];
+    const ref=cols[c-gap]||[];
+    for(let r=1;r<col.length;r++){
+      let same;
+      if(r===1){
+        // 新一栏的第二颗：比较当前栏与回看栏的高度。
+        same=col.length===ref.length;
+      }else{
+        // 同一栏继续向下：比较回看栏同一行与上一行是否同样存在。
+        const a=ref[r]!==undefined, b=ref[r-1]!==undefined;
+        same=(a===b);
+      }
+      out.push(same?'R':'B');
+    }
+  }
+  return out;
+}
+function roadFeature(seq,type){
+  const a=derivedRoad(seq,type); const tail=a.slice(-10).join('');
+  if(!tail)return {tail:'',last:'',streak:0,alt:0,n:0};
+  let streak=1; for(let i=a.length-2;i>=0&&a[i]===a[a.length-1];i--)streak++;
+  let alt=0; for(let i=Math.max(1,a.length-7);i<a.length;i++)if(a[i]!==a[i-1])alt++;
+  return {tail,last:a[a.length-1],streak,alt,n:a.length};
+}
+function roadFeatures(seq){return {eye:roadFeature(seq,'eye'),small:roadFeature(seq,'small'),cock:roadFeature(seq,'cock')}}
+function roadMatch(a,b){
+  if(!a||!b||!a.tail||!b.tail)return 0;
+  let score=0;
+  for(let k=Math.min(6,a.tail.length,b.tail.length);k>=2;k--){if(a.tail.slice(-k)===b.tail.slice(-k)){score+=k*k;break}}
+  if(a.last===b.last)score+=3;
+  score+=Math.max(0,3-Math.abs(a.streak-b.streak));
+  score+=Math.max(0,2-Math.abs(a.alt-b.alt))*0.5;
+  return score;
+}
+function roadColumns(items){return standardRoad(items);}
+function dotsFor(s,t){
+  if(t==='big')return bigRoad(s).flat();
+  return derivedRoad(s,t);
+}
+function renderRoad(){
+  const t=['big','eye','small','cock'].includes(data.activeRoad)?data.activeRoad:'big';
+  data.activeRoad=t;
+  const road=document.getElementById('road'); if(!road)return;
+  if(t==='big'){
+    const cols=bigRoad(data.current);
+    road.innerHTML=cols.map(c=>'<div class="col">'+c.map(x=>`<div class="dot ${x==='B'?'B':'P'}">${x==='B'?'庄':'闲'}</div>`).join('')+'</div>').join('')||'<span class="note">输入庄/闲后这里会立即显示大路</span>';
+  }else{
+    const a=derivedRoad(data.current,t);
+    const cols=bigRoad(a);
+    road.innerHTML=cols.map(c=>'<div class="col">'+c.map(x=>`<div class="dot ${x==='R'?'R':'B'}">●</div>`).join('')+'</div>').join('')||'<span class="note">当前牌局数量还不足以形成这条派生路</span>';
+  }
+  requestAnimationFrame(()=>{const wrap=road.parentElement;if(wrap)wrap.scrollLeft=wrap.scrollWidth;});
+}
+function roadTab(t,b){
+  document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');data.activeRoad=t;save();renderRoad();
+}
+function setBank(){const v=Number(document.getElementById('bankInput').value);if(Number.isFinite(v)&&v>=0){data.bankroll=v;save();render()}}function panel(id){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));document.getElementById(id).classList.add('show');document.getElementById(id).scrollIntoView({behavior:'smooth'})}function exportData(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:'application/json'}));a.download='安的百家乐智能路单正EV分析系统_备份.json';a.click()}function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(typeof x.bankroll!=='number'||!Array.isArray(x.current)||!Array.isArray(x.learn))throw 0;data=x;save();render();alert('导入成功')}catch{alert('备份格式不正确')}};r.readAsText(f)}
+function newShoe(){let s=[];for(let d=0;d<8;d++)for(let r=0;r<13;r++)s.push(...Array(4).fill(r===0||r>=9?0:r+1));for(let i=s.length-1;i;i--){const j=Math.floor(Math.random()*(i+1));[s[i],s[j]]=[s[j],s[i]]}return s}function drawHand(sh){let p=sh.pos||0,d=()=>sh.cards[p++],P=[d(),d()],B=[d(),d()],pt=(P[0]+P[1])%10,bt=(B[0]+B[1])%10;if(pt>=8||bt>=8){sh.pos=p;return[pt,bt]}let p3=null;if(pt<=5){p3=d();pt=(pt+p3)%10}if(p3===null){if(bt<=5)bt=(bt+d())%10}else{if(bt<=2)bt=(bt+d())%10;else if(bt===3&&p3!==8)bt=(bt+d())%10;else if(bt===4&&p3>=2&&p3<=7)bt=(bt+d())%10;else if(bt===5&&p3>=4&&p3<=7)bt=(bt+d())%10;else if(bt===6&&p3>=6&&p3<=7)bt=(bt+d())%10}sh.pos=p;return[pt,bt]}function benchmark(){const N=2000000;let B=0,P=0,T=0,sh={cards:newShoe(),pos:0};for(let i=0;i<N;i++){if(sh.pos>410)sh={cards:newShoe(),pos:0};const[p,b]=drawHand(sh);if(b>p)B++;else if(p>b)P++;else T++}const s=B+P+T;document.getElementById('bench').innerHTML=`<b>完成 ${N.toLocaleString()} 局</b><br>庄：${(B/s*100).toFixed(3)}%　闲：${(P/s*100).toFixed(3)}%　和：${(T/s*100).toFixed(3)}%`}
+render();</script></body></html>
